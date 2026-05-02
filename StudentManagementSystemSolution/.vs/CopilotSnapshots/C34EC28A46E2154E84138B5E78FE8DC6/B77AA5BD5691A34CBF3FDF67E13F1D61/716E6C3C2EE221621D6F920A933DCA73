@@ -1,0 +1,357 @@
+﻿using System.Windows.Forms;
+using System.Drawing;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class DashboardForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private Label lblWelcome;
+        private Label lblTotal;
+        private Button btnManageStudents;
+        private Button btnLogout;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.lblWelcome = new Label();
+            this.lblTotal = new Label();
+            this.btnManageStudents = new Button();
+            this.btnLogout = new Button();
+            this.SuspendLayout();
+            // Modern Dashboard layout (larger)
+            this.BackColor = Color.White;
+            this.ClientSize = new Size(1000, 600);
+            this.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Dashboard";
+
+            // Top panel
+            var topPanel = new Panel();
+            topPanel.Dock = DockStyle.Top;
+            topPanel.Height = 140;
+            topPanel.BackColor = Color.FromArgb(34, 139, 230);
+            this.Controls.Add(topPanel);
+
+            // Welcome label
+            this.lblWelcome = new Label();
+            this.lblWelcome.AutoSize = false;
+            this.lblWelcome.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblWelcome.ForeColor = Color.White;
+            this.lblWelcome.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            this.lblWelcome.Location = new Point(24, 32);
+            this.lblWelcome.Size = new Size(700, 40);
+            topPanel.Controls.Add(this.lblWelcome);
+
+            // Total students large label
+            this.lblTotal = new Label();
+            this.lblTotal.AutoSize = false;
+            this.lblTotal.TextAlign = ContentAlignment.MiddleRight;
+            this.lblTotal.ForeColor = Color.White;
+            this.lblTotal.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            this.lblTotal.Location = new Point(760, 40);
+            this.lblTotal.Size = new Size(200, 30);
+            topPanel.Controls.Add(this.lblTotal);
+
+            // Buttons panel
+            // Main layout: left navigation + main area
+            var mainPanel = new Panel();
+            mainPanel.Dock = DockStyle.Fill;
+            this.Controls.Add(mainPanel);
+
+            // Left navigation
+            var navPanel = new Panel();
+            navPanel.Width = 220;
+            navPanel.Dock = DockStyle.Left;
+            navPanel.Padding = new Padding(12);
+            navPanel.BackColor = Color.FromArgb(245, 246, 250);
+            mainPanel.Controls.Add(navPanel);
+
+            // Navigation buttons
+            this.btnManageStudents = new Button();
+            this.btnManageStudents.Location = new Point(12, 16);
+            this.btnManageStudents.Name = "btnManageStudents";
+            this.btnManageStudents.Size = new Size(190, 42);
+            this.btnManageStudents.Text = "Manage Students";
+            this.btnManageStudents.FlatStyle = FlatStyle.Flat;
+            this.btnManageStudents.BackColor = Color.FromArgb(34, 139, 230);
+            this.btnManageStudents.ForeColor = Color.White;
+            this.btnManageStudents.FlatAppearance.BorderSize = 0;
+            this.btnManageStudents.Click += new System.EventHandler(this.btnManageStudents_Click);
+            navPanel.Controls.Add(this.btnManageStudents);
+
+            this.btnManageUsers = new Button();
+            this.btnManageUsers.Location = new Point(12, 70);
+            this.btnManageUsers.Name = "btnManageUsers";
+            this.btnManageUsers.Size = new Size(190, 42);
+            this.btnManageUsers.Text = "Create / Manage Users";
+            this.btnManageUsers.FlatStyle = FlatStyle.Flat;
+            this.btnManageUsers.BackColor = Color.FromArgb(88, 101, 242);
+            this.btnManageUsers.ForeColor = Color.White;
+            this.btnManageUsers.FlatAppearance.BorderSize = 0;
+            this.btnManageUsers.Click += new System.EventHandler(this.btnManageUsers_Click);
+            navPanel.Controls.Add(this.btnManageUsers);
+
+            this.btnReports = new Button();
+            this.btnReports.Location = new Point(12, 124);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new Size(190, 42);
+            this.btnReports.Text = "Reports";
+            this.btnReports.FlatStyle = FlatStyle.Flat;
+            this.btnReports.BackColor = Color.FromArgb(72, 201, 176);
+            this.btnReports.ForeColor = Color.White;
+            this.btnReports.FlatAppearance.BorderSize = 0;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            navPanel.Controls.Add(this.btnReports);
+
+            this.btnSettings = new Button();
+            this.btnSettings.Location = new Point(12, 178);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new Size(190, 42);
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.FlatStyle = FlatStyle.Flat;
+            this.btnSettings.BackColor = Color.FromArgb(201, 203, 207);
+            this.btnSettings.ForeColor = Color.FromArgb(34, 45, 50);
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            navPanel.Controls.Add(this.btnSettings);
+
+            // Logout button at bottom of nav
+            this.btnLogout.Location = new Point(12, 520);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new Size(190, 36);
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.FlatStyle = FlatStyle.Flat;
+            this.btnLogout.BackColor = Color.FromArgb(220, 220, 220);
+            this.btnLogout.ForeColor = Color.FromArgb(34, 45, 50);
+            this.btnLogout.FlatAppearance.BorderSize = 0;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            navPanel.Controls.Add(this.btnLogout);
+
+            // Right / main area
+            var contentPanel = new Panel();
+            contentPanel.Dock = DockStyle.Fill;
+            contentPanel.Padding = new Padding(16);
+            mainPanel.Controls.Add(contentPanel);
+
+            // Stats panel
+            var statsPanel = new Panel();
+            statsPanel.Dock = DockStyle.Top;
+            statsPanel.Height = 140;
+            statsPanel.Padding = new Padding(8);
+            contentPanel.Controls.Add(statsPanel);
+
+            // Statistic cards
+            var cardTotal = CreateStatCard("Total Students", "lblTotalStat");
+            cardTotal.Location = new Point(8, 8);
+            statsPanel.Controls.Add(cardTotal);
+
+            var cardRecent = CreateStatCard("Recent (Last 7 days)", "lblRecentStat");
+            cardRecent.Location = new Point(240, 8);
+            statsPanel.Controls.Add(cardRecent);
+
+            var cardToday = CreateStatCard("Added Today", "lblTodayStat");
+            cardToday.Location = new Point(472, 8);
+            statsPanel.Controls.Add(cardToday);
+
+            // Actions above grid
+            this.txtSearch = new TextBox();
+            this.txtSearch.PlaceholderText = "Search students by name or id...";
+            this.txtSearch.Location = new Point(16, 160);
+            this.txtSearch.Size = new Size(360, 28);
+            contentPanel.Controls.Add(this.txtSearch);
+
+            this.btnSearch = new Button();
+            this.btnSearch.Location = new Point(384, 158);
+            this.btnSearch.Size = new Size(100, 30);
+            this.btnSearch.Text = "Search";
+            this.btnSearch.FlatStyle = FlatStyle.Flat;
+            this.btnSearch.BackColor = Color.FromArgb(34, 139, 230);
+            this.btnSearch.ForeColor = Color.White;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            contentPanel.Controls.Add(this.btnSearch);
+
+            this.btnRefresh = new Button();
+            this.btnRefresh.Location = new Point(496, 158);
+            this.btnRefresh.Size = new Size(100, 30);
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.FlatStyle = FlatStyle.Flat;
+            this.btnRefresh.BackColor = Color.FromArgb(108, 117, 125);
+            this.btnRefresh.ForeColor = Color.White;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            contentPanel.Controls.Add(this.btnRefresh);
+
+            this.btnExport = new Button();
+            this.btnExport.Location = new Point(608, 158);
+            this.btnExport.Size = new Size(120, 30);
+            this.btnExport.Text = "Export CSV";
+            this.btnExport.FlatStyle = FlatStyle.Flat;
+            this.btnExport.BackColor = Color.FromArgb(72, 201, 176);
+            this.btnExport.ForeColor = Color.White;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            contentPanel.Controls.Add(this.btnExport);
+
+            // Recent students grid (left) and student editor (right)
+            this.dgvRecent = new DataGridView();
+            this.dgvRecent.Location = new Point(16, 198);
+            this.dgvRecent.Name = "dgvRecent";
+            this.dgvRecent.Size = new Size(560, 360);
+            this.dgvRecent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRecent.ReadOnly = true;
+            this.dgvRecent.AutoGenerateColumns = true;
+            this.dgvRecent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvRecent.AllowUserToAddRows = false;
+            this.dgvRecent.AllowUserToDeleteRows = false;
+            this.dgvRecent.SelectionChanged += new System.EventHandler(this.dgvRecent_SelectionChanged);
+            contentPanel.Controls.Add(this.dgvRecent);
+
+            // Right side editor panel
+            var editorPanel = new Panel();
+            editorPanel.Location = new Point(592, 198);
+            editorPanel.Size = new Size(304, 360);
+            editorPanel.BackColor = Color.White;
+            editorPanel.Padding = new Padding(8);
+            contentPanel.Controls.Add(editorPanel);
+
+            // ID
+            var lblId = new Label();
+            lblId.Text = "ID";
+            lblId.Location = new Point(8, 8);
+            editorPanel.Controls.Add(lblId);
+            var txtId = new TextBox();
+            txtId.Name = "txtId";
+            txtId.Location = new Point(8, 28);
+            txtId.Size = new Size(280, 26);
+            txtId.ReadOnly = true;
+            editorPanel.Controls.Add(txtId);
+
+            // Full Name
+            var lblName = new Label();
+            lblName.Text = "Full Name";
+            lblName.Location = new Point(8, 62);
+            editorPanel.Controls.Add(lblName);
+            var txtName = new TextBox();
+            txtName.Name = "txtFullName";
+            txtName.Location = new Point(8, 82);
+            txtName.Size = new Size(280, 26);
+            editorPanel.Controls.Add(txtName);
+
+            // Email
+            var lblEmail = new Label();
+            lblEmail.Text = "Email";
+            lblEmail.Location = new Point(8, 116);
+            editorPanel.Controls.Add(lblEmail);
+            var txtEmail = new TextBox();
+            txtEmail.Name = "txtEmail";
+            txtEmail.Location = new Point(8, 136);
+            txtEmail.Size = new Size(280, 26);
+            editorPanel.Controls.Add(txtEmail);
+
+            // Phone
+            var lblPhone = new Label();
+            lblPhone.Text = "Phone";
+            lblPhone.Location = new Point(8, 170);
+            editorPanel.Controls.Add(lblPhone);
+            var txtPhone = new TextBox();
+            txtPhone.Name = "txtPhone";
+            txtPhone.Location = new Point(8, 190);
+            txtPhone.Size = new Size(280, 26);
+            editorPanel.Controls.Add(txtPhone);
+
+            // Gender
+            var lblGender = new Label();
+            lblGender.Text = "Gender";
+            lblGender.Location = new Point(8, 224);
+            editorPanel.Controls.Add(lblGender);
+            var cmbGender = new ComboBox();
+            cmbGender.Name = "cmbGender";
+            cmbGender.Location = new Point(8, 244);
+            cmbGender.Size = new Size(140, 26);
+            cmbGender.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbGender.Items.AddRange(new object[] { "Male", "Female", "Other" });
+            editorPanel.Controls.Add(cmbGender);
+
+            // DOB
+            var lblDob = new Label();
+            lblDob.Text = "Date of Birth";
+            lblDob.Location = new Point(160, 224);
+            editorPanel.Controls.Add(lblDob);
+            var dtpDob = new DateTimePicker();
+            dtpDob.Name = "dtpDob";
+            dtpDob.Location = new Point(160, 244);
+            dtpDob.Size = new Size(128, 26);
+            dtpDob.Format = DateTimePickerFormat.Short;
+            editorPanel.Controls.Add(dtpDob);
+
+            // Address
+            var lblAddress = new Label();
+            lblAddress.Text = "Address";
+            lblAddress.Location = new Point(8, 280);
+            editorPanel.Controls.Add(lblAddress);
+            var txtAddress = new TextBox();
+            txtAddress.Name = "txtAddress";
+            txtAddress.Location = new Point(8, 300);
+            txtAddress.Size = new Size(280, 48);
+            txtAddress.Multiline = true;
+            editorPanel.Controls.Add(txtAddress);
+
+            // Action buttons
+            var btnAddStudent = new Button();
+            btnAddStudent.Name = "btnAddStudent";
+            btnAddStudent.Text = "Add";
+            btnAddStudent.Location = new Point(8, 356);
+            btnAddStudent.Size = new Size(70, 28);
+            btnAddStudent.FlatStyle = FlatStyle.Flat;
+            btnAddStudent.BackColor = Color.FromArgb(60, 179, 113);
+            btnAddStudent.ForeColor = Color.White;
+            btnAddStudent.Click += new System.EventHandler(this.btnAddStudent_Click);
+            editorPanel.Controls.Add(btnAddStudent);
+
+            var btnUpdateStudent = new Button();
+            btnUpdateStudent.Name = "btnUpdateStudent";
+            btnUpdateStudent.Text = "Update";
+            btnUpdateStudent.Location = new Point(88, 356);
+            btnUpdateStudent.Size = new Size(70, 28);
+            btnUpdateStudent.FlatStyle = FlatStyle.Flat;
+            btnUpdateStudent.BackColor = Color.FromArgb(34, 139, 230);
+            btnUpdateStudent.ForeColor = Color.White;
+            btnUpdateStudent.Click += new System.EventHandler(this.btnUpdateStudent_Click);
+            editorPanel.Controls.Add(btnUpdateStudent);
+
+            var btnDeleteStudent = new Button();
+            btnDeleteStudent.Name = "btnDeleteStudent";
+            btnDeleteStudent.Text = "Delete";
+            btnDeleteStudent.Location = new Point(168, 356);
+            btnDeleteStudent.Size = new Size(70, 28);
+            btnDeleteStudent.FlatStyle = FlatStyle.Flat;
+            btnDeleteStudent.BackColor = Color.FromArgb(220, 53, 69);
+            btnDeleteStudent.ForeColor = Color.White;
+            btnDeleteStudent.Click += new System.EventHandler(this.btnDeleteStudent_Click);
+            editorPanel.Controls.Add(btnDeleteStudent);
+
+            var btnClear = new Button();
+            btnClear.Name = "btnClear";
+            btnClear.Text = "Clear";
+            btnClear.Location = new Point(248, 356);
+            btnClear.Size = new Size(40, 28);
+            btnClear.FlatStyle = FlatStyle.Flat;
+            btnClear.BackColor = Color.FromArgb(200, 200, 200);
+            btnClear.Click += new System.EventHandler(this.btnClear_Click);
+            editorPanel.Controls.Add(btnClear);
+
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

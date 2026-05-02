@@ -1,0 +1,124 @@
+using System.Windows.Forms;
+using System.Drawing;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class LoginForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private TextBox txtUsername;
+        private TextBox txtPassword;
+        private Button btnLogin;
+        private Button btnExit;
+        private Label lblUser;
+        private Label lblPass;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.txtUsername = new TextBox();
+            this.txtPassword = new TextBox();
+            this.btnLogin = new Button();
+            this.btnExit = new Button();
+            this.lblUser = new Label();
+            this.lblPass = new Label();
+            this.SuspendLayout();
+            // Modern login layout
+            // form styles - larger form
+            this.BackColor = Color.FromArgb(250, 250, 250);
+            this.ClientSize = new Size(700, 380);
+            this.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Student Management - Login";
+
+            // Title label
+            var lblTitle = new Label();
+            lblTitle.Text = "Student Management System";
+            lblTitle.Font = new Font("Segoe UI", 14F, FontStyle.Bold, GraphicsUnit.Point);
+            lblTitle.ForeColor = Color.FromArgb(34, 45, 50);
+            lblTitle.AutoSize = false;
+            lblTitle.TextAlign = ContentAlignment.MiddleCenter;
+            lblTitle.Dock = DockStyle.Top;
+            lblTitle.Height = 60;
+            this.Controls.Add(lblTitle);
+
+            // Username label
+            this.lblUser.AutoSize = true;
+            this.lblUser.Location = new Point(120, 120);
+            this.lblUser.Name = "lblUser";
+            this.lblUser.Size = new Size(70, 15);
+            this.lblUser.Text = "Username:";
+            this.lblUser.ForeColor = Color.FromArgb(64, 64, 64);
+            this.Controls.Add(this.lblUser);
+
+            // Username textbox
+            this.txtUsername.Location = new Point(120, 140);
+            this.txtUsername.Name = "txtUsername";
+            this.txtUsername.Size = new Size(460, 30);
+            this.txtUsername.PlaceholderText = "Enter username";
+            this.Controls.Add(this.txtUsername);
+
+            // Password label
+            this.lblPass.AutoSize = true;
+            this.lblPass.Location = new Point(120, 185);
+            this.lblPass.Name = "lblPass";
+            this.lblPass.Size = new Size(63, 15);
+            this.lblPass.Text = "Password:";
+            this.lblPass.ForeColor = Color.FromArgb(64, 64, 64);
+            this.Controls.Add(this.lblPass);
+
+            // Password textbox
+            this.txtPassword.Location = new Point(120, 205);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new Size(460, 30);
+            this.txtPassword.UseSystemPasswordChar = true;
+            this.txtPassword.PlaceholderText = "Enter password";
+            this.Controls.Add(this.txtPassword);
+
+            // Login button
+            this.btnLogin.Location = new Point(120, 250);
+            this.btnLogin.Name = "btnLogin";
+            this.btnLogin.Size = new Size(180, 38);
+            this.btnLogin.Text = "Login";
+            this.btnLogin.FlatStyle = FlatStyle.Flat;
+            this.btnLogin.BackColor = Color.FromArgb(34, 139, 230);
+            this.btnLogin.ForeColor = Color.White;
+            this.btnLogin.FlatAppearance.BorderSize = 0;
+            this.btnLogin.Click += new System.EventHandler(this.btnLogin_Click);
+            this.Controls.Add(this.btnLogin);
+
+            // Exit button
+            this.btnExit.Location = new Point(300, 250);
+            this.btnExit.Name = "btnExit";
+            this.btnExit.Size = new Size(180, 38);
+            this.btnExit.Text = "Exit";
+            this.btnExit.FlatStyle = FlatStyle.Flat;
+            this.btnExit.BackColor = Color.FromArgb(200, 200, 200);
+            this.btnExit.ForeColor = Color.FromArgb(34, 45, 50);
+            this.btnExit.FlatAppearance.BorderSize = 0;
+            this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
+            this.Controls.Add(this.btnExit);
+
+            // (Create User moved to Dashboard) - removed from login
+
+            // Keyboard shortcuts
+            this.AcceptButton = this.btnLogin;
+            this.CancelButton = this.btnExit;
+
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

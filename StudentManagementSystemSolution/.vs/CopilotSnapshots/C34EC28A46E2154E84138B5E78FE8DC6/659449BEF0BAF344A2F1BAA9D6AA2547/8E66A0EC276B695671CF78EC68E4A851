@@ -1,0 +1,174 @@
+﻿using System.Windows.Forms;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class StudentForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private DataGridView dgvStudents;
+        private TextBox txtId;
+        private TextBox txtName;
+        private TextBox txtEmail;
+        private TextBox txtAge;
+        private TextBox txtPhone;
+        private TextBox txtAddress;
+        private Button btnAdd;
+        private Button btnUpdate;
+        private Button btnDelete;
+        private Label lblCount;
+        private TextBox txtSearch;
+        private Button btnSearch;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.dgvStudents = new DataGridView();
+            this.txtId = new TextBox();
+            this.txtName = new TextBox();
+            this.txtEmail = new TextBox();
+            this.txtAge = new TextBox();
+            this.txtPhone = new TextBox();
+            this.txtAddress = new TextBox();
+            this.btnAdd = new Button();
+            this.btnUpdate = new Button();
+            this.btnDelete = new Button();
+            this.lblCount = new Label();
+            this.txtSearch = new TextBox();
+            this.btnSearch = new Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // dgvStudents
+            // 
+            this.dgvStudents.Location = new System.Drawing.Point(12, 12);
+            this.dgvStudents.Name = "dgvStudents";
+            this.dgvStudents.Size = new System.Drawing.Size(560, 200);
+            this.dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.dgvStudents.ReadOnly = true;
+            this.dgvStudents.AutoGenerateColumns = true;
+            this.dgvStudents.SelectionChanged += new System.EventHandler(this.dgvStudents_SelectionChanged);
+            // 
+            // txtSearch
+            // 
+            this.txtSearch.Location = new System.Drawing.Point(12, 220);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new System.Drawing.Size(160, 23);
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(180, 218);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(80, 25);
+            this.btnSearch.Text = "Search";
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txtId
+            // 
+            this.txtId.Location = new System.Drawing.Point(12, 255);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new System.Drawing.Size(80, 23);
+            this.txtId.ReadOnly = true;
+            this.txtId.PlaceholderText = "ID";
+            // 
+            // txtName
+            // 
+            this.txtName.Location = new System.Drawing.Point(100, 255);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new System.Drawing.Size(180, 23);
+            this.txtName.PlaceholderText = "Name";
+            // 
+            // txtEmail
+            // 
+            this.txtEmail.Location = new System.Drawing.Point(290, 255);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new System.Drawing.Size(200, 23);
+            this.txtEmail.PlaceholderText = "Email";
+            // 
+            // txtAge
+            // 
+            this.txtAge.Location = new System.Drawing.Point(12, 290);
+            this.txtAge.Name = "txtAge";
+            this.txtAge.Size = new System.Drawing.Size(80, 23);
+            this.txtAge.PlaceholderText = "Age";
+            // 
+            // txtPhone
+            // 
+            this.txtPhone.Location = new System.Drawing.Point(100, 290);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new System.Drawing.Size(180, 23);
+            this.txtPhone.PlaceholderText = "Phone";
+            // 
+            // txtAddress
+            // 
+            this.txtAddress.Location = new System.Drawing.Point(290, 290);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new System.Drawing.Size(200, 23);
+            this.txtAddress.PlaceholderText = "Address";
+            // 
+            // btnAdd
+            // 
+            this.btnAdd.Location = new System.Drawing.Point(12, 330);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new System.Drawing.Size(80, 30);
+            this.btnAdd.Text = "Add";
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            // 
+            // btnUpdate
+            // 
+            this.btnUpdate.Location = new System.Drawing.Point(100, 330);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new System.Drawing.Size(80, 30);
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(190, 330);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(80, 30);
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            // 
+            // lblCount
+            // 
+            this.lblCount.AutoSize = true;
+            this.lblCount.Location = new System.Drawing.Point(480, 220);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new System.Drawing.Size(40, 15);
+            this.lblCount.Text = "Total: 0";
+            // 
+            // StudentForm
+            // 
+            this.ClientSize = new System.Drawing.Size(584, 380);
+            this.Controls.Add(this.dgvStudents);
+            this.Controls.Add(this.txtSearch);
+            this.Controls.Add(this.btnSearch);
+            this.Controls.Add(this.txtId);
+            this.Controls.Add(this.txtName);
+            this.Controls.Add(this.txtEmail);
+            this.Controls.Add(this.txtAge);
+            this.Controls.Add(this.txtPhone);
+            this.Controls.Add(this.txtAddress);
+            this.Controls.Add(this.btnAdd);
+            this.Controls.Add(this.btnUpdate);
+            this.Controls.Add(this.btnDelete);
+            this.Controls.Add(this.lblCount);
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.Text = "Student Management";
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

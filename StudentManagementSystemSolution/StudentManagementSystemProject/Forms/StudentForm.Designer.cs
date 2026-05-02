@@ -1,0 +1,236 @@
+using System.Windows.Forms;
+using System.Drawing;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class StudentForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private DataGridView dgvStudents;
+        private TextBox txtId;
+        private TextBox txtName;
+        private TextBox txtEmail;
+        private TextBox txtAge;
+        private TextBox txtPhone;
+        private TextBox txtAddress;
+        private Button btnAdd;
+        private Button btnUpdate;
+        private Button btnDelete;
+        private Label lblCount;
+        private TextBox txtSearch;
+        private Button btnSearch;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.dgvStudents = new DataGridView();
+            this.txtId = new TextBox();
+            this.txtName = new TextBox();
+            this.txtEmail = new TextBox();
+            this.txtAge = new TextBox();
+            this.txtPhone = new TextBox();
+            this.txtAddress = new TextBox();
+            this.btnAdd = new Button();
+            this.btnUpdate = new Button();
+            this.btnDelete = new Button();
+            this.lblCount = new Label();
+            this.txtSearch = new TextBox();
+            this.btnSearch = new Button();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).BeginInit();
+            this.SuspendLayout();
+            // Student form modern layout
+            this.BackColor = Color.WhiteSmoke;
+            this.ClientSize = new Size(900, 520);
+            this.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterParent;
+            this.Text = "Student Management";
+
+            // Search panel
+            var pnlTop = new Panel();
+            pnlTop.Dock = DockStyle.Top;
+            pnlTop.Height = 60;
+            pnlTop.Padding = new Padding(12);
+            pnlTop.BackColor = Color.White;
+            this.Controls.Add(pnlTop);
+
+            this.txtSearch.Location = new Point(12, 18);
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.Size = new Size(260, 26);
+            this.txtSearch.PlaceholderText = "Search by name or ID";
+            pnlTop.Controls.Add(this.txtSearch);
+
+            this.btnSearch.Location = new Point(284, 16);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new Size(100, 30);
+            this.btnSearch.Text = "Search";
+            this.btnSearch.FlatStyle = FlatStyle.Flat;
+            this.btnSearch.BackColor = Color.FromArgb(34, 139, 230);
+            this.btnSearch.ForeColor = Color.White;
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            pnlTop.Controls.Add(this.btnSearch);
+
+            this.lblCount.AutoSize = false;
+            this.lblCount.Location = new Point(760, 18);
+            this.lblCount.Name = "lblCount";
+            this.lblCount.Size = new Size(120, 26);
+            this.lblCount.Text = "Total: 0";
+            this.lblCount.TextAlign = ContentAlignment.MiddleRight;
+            pnlTop.Controls.Add(this.lblCount);
+
+            // Data grid
+            this.dgvStudents.Location = new Point(12, 80);
+            this.dgvStudents.Name = "dgvStudents";
+            this.dgvStudents.Size = new Size(600, 420);
+            this.dgvStudents.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.dgvStudents.ReadOnly = true;
+            this.dgvStudents.AutoGenerateColumns = true;
+            this.dgvStudents.SelectionChanged += new System.EventHandler(this.dgvStudents_SelectionChanged);
+            this.dgvStudents.AllowUserToAddRows = false;
+            this.dgvStudents.AllowUserToDeleteRows = false;
+            this.dgvStudents.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvStudents.EnableHeadersVisualStyles = false;
+            this.dgvStudents.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+            this.dgvStudents.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(34, 45, 50);
+            this.dgvStudents.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
+            this.Controls.Add(this.dgvStudents);
+
+            // Right panel for details and actions
+            var pnlRight = new Panel();
+            pnlRight.Location = new Point(624, 80);
+            pnlRight.Size = new Size(260, 420);
+            pnlRight.BackColor = Color.White;
+            pnlRight.Padding = new Padding(12);
+            this.Controls.Add(pnlRight);
+
+            // ID (read-only)
+            var lblId = new Label();
+            lblId.Text = "ID";
+            lblId.Location = new Point(12, 8);
+            pnlRight.Controls.Add(lblId);
+            this.txtId.Location = new Point(12, 28);
+            this.txtId.Name = "txtId";
+            this.txtId.Size = new Size(230, 26);
+            this.txtId.ReadOnly = true;
+            pnlRight.Controls.Add(this.txtId);
+
+            // Name
+            var lblName = new Label();
+            lblName.Text = "Name";
+            lblName.Location = new Point(12, 62);
+            pnlRight.Controls.Add(lblName);
+            this.txtName.Location = new Point(12, 82);
+            this.txtName.Name = "txtName";
+            this.txtName.Size = new Size(230, 26);
+            pnlRight.Controls.Add(this.txtName);
+
+            // Email
+            var lblEmail = new Label();
+            lblEmail.Text = "Email";
+            lblEmail.Location = new Point(12, 116);
+            pnlRight.Controls.Add(lblEmail);
+            this.txtEmail.Location = new Point(12, 136);
+            this.txtEmail.Name = "txtEmail";
+            this.txtEmail.Size = new Size(230, 26);
+            pnlRight.Controls.Add(this.txtEmail);
+
+            // Gender
+            var lblGender = new Label();
+            lblGender.Text = "Gender";
+            lblGender.Location = new Point(12, 170);
+            pnlRight.Controls.Add(lblGender);
+            // replace txtAge with cmbGender
+            this.txtAge = null; // no longer used
+            var cmbGender = new ComboBox();
+            cmbGender.Name = "cmbGender";
+            cmbGender.Location = new Point(12, 190);
+            cmbGender.Size = new Size(120, 26);
+            cmbGender.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbGender.Items.AddRange(new object[] { "Male", "Female", "Other" });
+            cmbGender.SelectedIndex = 0;
+            pnlRight.Controls.Add(cmbGender);
+
+            // Date of Birth
+            var lblDob = new Label();
+            lblDob.Text = "Date of Birth";
+            lblDob.Location = new Point(140, 170);
+            pnlRight.Controls.Add(lblDob);
+            var dtpDob = new DateTimePicker();
+            dtpDob.Name = "dtpDob";
+            dtpDob.Location = new Point(140, 190);
+            dtpDob.Size = new Size(102, 26);
+            dtpDob.Format = DateTimePickerFormat.Short;
+            pnlRight.Controls.Add(dtpDob);
+
+            // Phone
+            var lblPhone = new Label();
+            lblPhone.Text = "Phone";
+            lblPhone.Location = new Point(12, 224);
+            pnlRight.Controls.Add(lblPhone);
+            this.txtPhone.Location = new Point(12, 244);
+            this.txtPhone.Name = "txtPhone";
+            this.txtPhone.Size = new Size(230, 26);
+            pnlRight.Controls.Add(this.txtPhone);
+
+            // Address
+            var lblAddress = new Label();
+            lblAddress.Text = "Address";
+            lblAddress.Location = new Point(12, 278);
+            pnlRight.Controls.Add(lblAddress);
+            this.txtAddress.Location = new Point(12, 298);
+            this.txtAddress.Name = "txtAddress";
+            this.txtAddress.Size = new Size(230, 60);
+            this.txtAddress.Multiline = true;
+            pnlRight.Controls.Add(this.txtAddress);
+
+            // Buttons
+            this.btnAdd.Location = new Point(12, 372);
+            this.btnAdd.Name = "btnAdd";
+            this.btnAdd.Size = new Size(70, 32);
+            this.btnAdd.Text = "Add";
+            this.btnAdd.FlatStyle = FlatStyle.Flat;
+            this.btnAdd.BackColor = Color.FromArgb(60, 179, 113);
+            this.btnAdd.ForeColor = Color.White;
+            this.btnAdd.FlatAppearance.BorderSize = 0;
+            this.btnAdd.Click += new System.EventHandler(this.btnAdd_Click);
+            pnlRight.Controls.Add(this.btnAdd);
+
+            this.btnUpdate.Location = new Point(94, 372);
+            this.btnUpdate.Name = "btnUpdate";
+            this.btnUpdate.Size = new Size(70, 32);
+            this.btnUpdate.Text = "Update";
+            this.btnUpdate.FlatStyle = FlatStyle.Flat;
+            this.btnUpdate.BackColor = Color.FromArgb(34, 139, 230);
+            this.btnUpdate.ForeColor = Color.White;
+            this.btnUpdate.FlatAppearance.BorderSize = 0;
+            this.btnUpdate.Click += new System.EventHandler(this.btnUpdate_Click);
+            pnlRight.Controls.Add(this.btnUpdate);
+
+            this.btnDelete.Location = new Point(176, 372);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new Size(70, 32);
+            this.btnDelete.Text = "Delete";
+            this.btnDelete.FlatStyle = FlatStyle.Flat;
+            this.btnDelete.BackColor = Color.FromArgb(220, 53, 69);
+            this.btnDelete.ForeColor = Color.White;
+            this.btnDelete.FlatAppearance.BorderSize = 0;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            pnlRight.Controls.Add(this.btnDelete);
+
+            ((System.ComponentModel.ISupportInitialize)(this.dgvStudents)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

@@ -1,0 +1,78 @@
+﻿using System.Windows.Forms;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class DashboardForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private Label lblWelcome;
+        private Label lblTotal;
+        private Button btnManageStudents;
+        private Button btnLogout;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.lblWelcome = new Label();
+            this.lblTotal = new Label();
+            this.btnManageStudents = new Button();
+            this.btnLogout = new Button();
+            this.SuspendLayout();
+            // 
+            // lblWelcome
+            // 
+            this.lblWelcome.AutoSize = true;
+            this.lblWelcome.Location = new System.Drawing.Point(20, 20);
+            this.lblWelcome.Name = "lblWelcome";
+            this.lblWelcome.Size = new System.Drawing.Size(55, 15);
+            this.lblWelcome.Text = "Welcome";
+            // 
+            // lblTotal
+            // 
+            this.lblTotal.AutoSize = true;
+            this.lblTotal.Location = new System.Drawing.Point(20, 50);
+            this.lblTotal.Name = "lblTotal";
+            this.lblTotal.Size = new System.Drawing.Size(85, 15);
+            this.lblTotal.Text = "Total Students: 0";
+            // 
+            // btnManageStudents
+            // 
+            this.btnManageStudents.Location = new System.Drawing.Point(20, 90);
+            this.btnManageStudents.Name = "btnManageStudents";
+            this.btnManageStudents.Size = new System.Drawing.Size(140, 30);
+            this.btnManageStudents.Text = "Manage Students";
+            this.btnManageStudents.Click += new System.EventHandler(this.btnManageStudents_Click);
+            // 
+            // btnLogout
+            // 
+            this.btnLogout.Location = new System.Drawing.Point(180, 90);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new System.Drawing.Size(80, 30);
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            // 
+            // DashboardForm
+            // 
+            this.ClientSize = new System.Drawing.Size(300, 150);
+            this.Controls.Add(this.lblWelcome);
+            this.Controls.Add(this.lblTotal);
+            this.Controls.Add(this.btnManageStudents);
+            this.Controls.Add(this.btnLogout);
+            this.FormBorderStyle = FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Dashboard";
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

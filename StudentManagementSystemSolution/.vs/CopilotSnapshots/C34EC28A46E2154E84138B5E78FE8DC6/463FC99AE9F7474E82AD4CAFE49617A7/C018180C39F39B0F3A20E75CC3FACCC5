@@ -1,0 +1,120 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Data;
+using Microsoft.Data.SqlClient;
+using StudentManagementSystemProject.Data;
+using StudentManagementSystemProject.Models;
+
+namespace StudentManagementSystemProject.DAL
+{
+    public class StudentDAL
+    {
+        // Get all students
+        public List<Student> GetAll()
+        {
+            var list = new List<Student>();
+            using (var conn = DBConnection.GetConnection())
+            using (var cmd = new SqlCommand("SELECT Id, Name, Email, Age, Phone, Address FROM Students", conn))
+            {
+                conn.Open();
+                using (var rdr = cmd.ExecuteReader())
+                {
+                    while (rdr.Read())
+                    {
+                        list.Add(new Student
+                        {
+                            Id = rdr.GetInt32(0),
+                            Name = rdr.GetString(1),
+                            Email = rdr.GetString(2),
+                            Age = rdr.GetInt32(3),
+                            Phone = rdr.IsDBNull(4) ? string.Empty : rdr.GetString(4),
+                            Address = rdr.IsDBNull(5) ? string.Empty : rdr.GetString(5)
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public bool Add(Student s)
+        {
+            using (var conn = DBConnection.GetConnection())
+            using (var cmd = new SqlCommand("INSERT INTO Students (Name, Email, Age, Phone, Address) VALUES (@Name, @Email, @Age, @Phone, @Address)", conn))
+            {
+                cmd.Parameters.AddWithValue("@Name", s.Name);
+                cmd.Parameters.AddWithValue("@Email", s.Email);
+                cmd.Parameters.AddWithValue("@Age", s.Age);
+                cmd.Parameters.AddWithValue("@Phone", (object)s.Phone ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Address", (object)s.Address ?? DBNull.Value);
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public bool Update(Student s)
+        {
+            using (var conn = DBConnection.GetConnection())
+            using (var cmd = new SqlCommand("UPDATE Students SET Name=@Name, Email=@Email, Age=@Age, Phone=@Phone, Address=@Address WHERE Id=@Id", conn))
+            {
+                cmd.Parameters.AddWithValue("@Name", s.Name);
+                cmd.Parameters.AddWithValue("@Email", s.Email);
+                cmd.Parameters.AddWithValue("@Age", s.Age);
+                cmd.Parameters.AddWithValue("@Phone", (object)s.Phone ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Address", (object)s.Address ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@Id", s.Id);
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        public bool Delete(int id)
+        {
+            using (var conn = DBConnection.GetConnection())
+            using (var cmd = new SqlCommand("DELETE FROM Students WHERE Id=@Id", conn))
+            {
+                cmd.Parameters.AddWithValue("@Id", id);
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
+            }
+        }
+
+        // Search by name or id
+        public List<Student> Search(string term)
+        {
+            var list = new List<Student>();
+            using (var conn = DBConnection.GetConnection())
+            using (var cmd = new SqlCommand("SELECT Id, Name, Email, Age, Phone, Address FROM Students WHERE Name LIKE @term OR CAST(Id AS VARCHAR)=@termExact", conn))
+            {
+                cmd.Parameters.AddWithValue("@term", "%" + term + "%");
+                cmd.Parameters.AddWithValue("@termExact", term);
+                conn.Open();
+                using (var rdr = cmd.ExecuteReader())
+                {
+                    while (rdr.Read())
+                    {
+                        list.Add(new Student
+                        {
+                            Id = rdr.GetInt32(0),
+                            Name = rdr.GetString(1),
+                            Email = rdr.GetString(2),
+                            Age = rdr.GetInt32(3),
+                            Phone = rdr.IsDBNull(4) ? string.Empty : rdr.GetString(4),
+                            Address = rdr.IsDBNull(5) ? string.Empty : rdr.GetString(5)
+                        });
+                    }
+                }
+            }
+            return list;
+        }
+
+        public int GetCount()
+        {
+            using (var conn = DBConnection.GetConnection())
+            using (var cmd = new SqlCommand("SELECT COUNT(1) FROM Students", conn))
+            {
+                conn.Open();
+                return Convert.ToInt32(cmd.ExecuteScalar());
+            }
+        }
+    }
+}

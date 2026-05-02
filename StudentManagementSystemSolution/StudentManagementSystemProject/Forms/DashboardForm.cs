@@ -1,0 +1,457 @@
+using System;
+using System.Linq;
+using System.Windows.Forms;
+using System.Drawing;
+using StudentManagementSystemProject.DAL;
+using StudentManagementSystemProject.Models;
+
+namespace StudentManagementSystemProject.Forms
+{
+    public partial class DashboardForm : Form
+    {
+        private readonly string _username;
+        private readonly StudentDAL _studentDal = new StudentDAL();
+
+        // New controls used in designer
+        private Button btnManageUsers;
+        private Button btnReports;
+        private Button btnSettings;
+        private Button btnRefresh;
+        private Button btnExport;
+        private Button btnSearch;
+        private TextBox txtSearch;
+        private DataGridView dgvRecent;
+
+        public DashboardForm(string username)
+        {
+            _username = username;
+            InitializeComponent();
+            LoadStats();
+            LoadRecentStudents();
+        }
+
+        // Handler for quick-add Add New button in dashboard
+        private void btnAddNew_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var txtNewName = GetControl<TextBox>("txtNewName");
+                var txtNewEmail = GetControl<TextBox>("txtNewEmail");
+                var txtNewPhone = GetControl<TextBox>("txtNewPhone");
+                var cmbNewGender = GetControl<ComboBox>("cmbNewGender");
+                var dtpNewDob = GetControl<DateTimePicker>("dtpNewDob");
+                var txtNewAddress = GetControl<TextBox>("txtNewAddress");
+
+                if (txtNewName == null || txtNewEmail == null)
+                {
+                    MessageBox.Show("Quick add controls not found", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+
+                var name = txtNewName.Text.Trim();
+                var email = txtNewEmail.Text.Trim();
+                if (string.IsNullOrEmpty(name) || string.IsNullOrEmpty(email) || !email.Contains("@"))
+                {
+                    MessageBox.Show("Please enter valid name and email", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                var s = new Student
+                {
+                    Name = name,
+                    Email = email,
+                    Phone = txtNewPhone?.Text.Trim() ?? string.Empty,
+                    Gender = cmbNewGender?.SelectedItem?.ToString() ?? string.Empty,
+                    DateOfBirth = dtpNewDob?.Value.Date,
+                    Address = txtNewAddress?.Text.Trim() ?? string.Empty
+                };
+
+                if (_studentDal.Add(s))
+                {
+                    MessageBox.Show("Student added", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadStats();
+                    LoadRecentStudents();
+                    // clear quick add
+                    if (txtNewName != null) txtNewName.Text = string.Empty;
+                    if (txtNewEmail != null) txtNewEmail.Text = string.Empty;
+                    if (txtNewPhone != null) txtNewPhone.Text = string.Empty;
+                    if (cmbNewGender != null) cmbNewGender.SelectedIndex = 0;
+                    if (dtpNewDob != null) dtpNewDob.Value = DateTime.Today;
+                    if (txtNewAddress != null) txtNewAddress.Text = string.Empty;
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add student", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Add failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Helper to find controls created in designer by name
+        private T GetControl<T>(string name) where T : Control
+        {
+            var c = this.Controls.Find(name, true).FirstOrDefault();
+            return c as T;
+        }
+
+        // Validate form inputs and create Student object. Returns null if invalid.
+        private Student ReadStudentFromForm()
+        {
+            var txtId = GetControl<TextBox>("txtId");
+            var txtName = GetControl<TextBox>("txtFullName");
+            var txtEmail = GetControl<TextBox>("txtEmail");
+            var txtPhone = GetControl<TextBox>("txtPhone");
+            var cmbGender = GetControl<ComboBox>("cmbGender");
+            var dtpDob = GetControl<DateTimePicker>("dtpDob");
+            var txtAddress = GetControl<TextBox>("txtAddress");
+
+            if (txtName == null || txtEmail == null)
+                return null;
+
+            var name = txtName.Text.Trim();
+            var email = txtEmail.Text.Trim();
+            if (string.IsNullOrEmpty(name))
+            {
+                MessageBox.Show("Name is required", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            if (string.IsNullOrEmpty(email) || !email.Contains("@"))
+            {
+                MessageBox.Show("Valid email is required", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            DateTime? dob = null;
+            if (dtpDob != null)
+            {
+                dob = dtpDob.Value.Date;
+            }
+
+            var s = new Student
+            {
+                Name = name,
+                Email = email,
+                Phone = txtPhone?.Text.Trim() ?? string.Empty,
+                Gender = cmbGender?.SelectedItem?.ToString() ?? string.Empty,
+                DateOfBirth = dob,
+                Address = txtAddress?.Text.Trim() ?? string.Empty
+            };
+
+            if (txtId != null && int.TryParse(txtId.Text, out var id)) s.Id = id;
+            return s;
+        }
+
+        private void LoadStats()
+        {
+            try
+            {
+                lblWelcome.Text = $"Welcome, {_username}";
+                // Update main total label if exists
+                lblTotal.Text = $"Total Students: {_studentDal.GetCount()}";
+
+                // Update stat cards when present
+                var all = _studentDal.GetAll();
+                var total = all.Count;
+                var recentCount = all.OrderByDescending(s => s.Id).Take(7).Count();
+                var todayCount = 0; // If CreatedAt present, compute today count here.
+
+                var lblTotalStat = this.Controls.Find("lblTotalStat", true).FirstOrDefault() as Label;
+                var lblRecentStat = this.Controls.Find("lblRecentStat", true).FirstOrDefault() as Label;
+                var lblTodayStat = this.Controls.Find("lblTodayStat", true).FirstOrDefault() as Label;
+
+                if (lblTotalStat != null) lblTotalStat.Text = total.ToString();
+                if (lblRecentStat != null) lblRecentStat.Text = recentCount.ToString();
+                if (lblTodayStat != null) lblTodayStat.Text = todayCount.ToString();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading dashboard: " + ex.Message);
+            }
+        }
+
+        // Helper to create a small stat card panel used in designer
+        private Panel CreateStatCard(string title, string valueLabelName)
+        {
+            var card = new Panel();
+            card.Size = new Size(220, 96);
+            card.Margin = new Padding(6);
+            card.BackColor = Color.White;
+            card.BorderStyle = BorderStyle.FixedSingle;
+
+            var lblTitle = new Label();
+            lblTitle.Text = title;
+            lblTitle.Font = new Font("Segoe UI", 9F, FontStyle.Regular);
+            lblTitle.ForeColor = Color.FromArgb(100, 100, 100);
+            lblTitle.Location = new Point(12, 8);
+            lblTitle.Size = new Size(196, 18);
+            card.Controls.Add(lblTitle);
+
+            var lblValue = new Label();
+            lblValue.Name = valueLabelName;
+            lblValue.Text = "0";
+            lblValue.Font = new Font("Segoe UI", 20F, FontStyle.Bold);
+            lblValue.ForeColor = Color.FromArgb(34, 45, 50);
+            lblValue.Location = new Point(12, 28);
+            lblValue.Size = new Size(196, 56);
+            lblValue.TextAlign = ContentAlignment.MiddleLeft;
+            card.Controls.Add(lblValue);
+
+            return card;
+        }
+
+        private void LoadRecentStudents()
+        {
+            try
+            {
+                var all = _studentDal.GetAll();
+                var recent = all.OrderByDescending(s => s.Id).Take(10).ToList();
+                if (dgvRecent != null)
+                {
+                    dgvRecent.DataSource = recent;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading recent students: " + ex.Message);
+            }
+        }
+
+        private void btnManageStudents_Click(object sender, EventArgs e)
+        {
+            var sf = new StudentForm();
+            sf.ShowDialog();
+            LoadStats();
+            LoadRecentStudents();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnManageUsers_Click(object sender, EventArgs e)
+        {
+            var f = new CreateUserForm();
+            f.ShowDialog();
+        }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Reports feature coming soon.", "Reports", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Settings feature coming soon.", "Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadStats();
+            LoadRecentStudents();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            var term = txtSearch?.Text.Trim();
+            if (string.IsNullOrEmpty(term))
+            {
+                LoadRecentStudents();
+                return;
+            }
+            try
+            {
+                var results = _studentDal.Search(term);
+                if (dgvRecent != null)
+                    dgvRecent.DataSource = results;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Search error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Real-time search handler (TextChanged)
+        private void txtSearch_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                var term = txtSearch?.Text.Trim();
+                if (string.IsNullOrEmpty(term))
+                {
+                    LoadRecentStudents();
+                    return;
+                }
+                var results = _studentDal.Search(term);
+                if (dgvRecent != null)
+                    dgvRecent.DataSource = results;
+            }
+            catch (Exception ex)
+            {
+                // swallow or show minimal error
+                Console.WriteLine("Search error: " + ex.Message);
+            }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var all = _studentDal.GetAll();
+                using (var sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                    sfd.FileName = "students_export.csv";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        using (var sw = new System.IO.StreamWriter(sfd.FileName))
+                        {
+                            sw.WriteLine("Id,Name,Email,Phone,Gender,DateOfBirth,Address");
+                            foreach (var s in all)
+                            {
+                                var dob = s.DateOfBirth.HasValue ? s.DateOfBirth.Value.ToString("yyyy-MM-dd") : string.Empty;
+                                var line = $"{s.Id},\"{s.Name}\",\"{s.Email}\",\"{s.Phone}\",\"{s.Gender}\",\"{dob}\",\"{s.Address}\"";
+                                sw.WriteLine(line);
+                            }
+                        }
+                        MessageBox.Show("Export completed.", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Export failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Add student
+        private void btnAddStudent_Click(object sender, EventArgs e)
+        {
+            var s = ReadStudentFromForm();
+            if (s == null) return;
+            try
+            {
+                if (_studentDal.Add(s))
+                {
+                    MessageBox.Show("Student added", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadStats();
+                    LoadRecentStudents();
+                    ClearForm();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to add student", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Update student
+        private void btnUpdateStudent_Click(object sender, EventArgs e)
+        {
+            var s = ReadStudentFromForm();
+            if (s == null || s.Id <= 0)
+            {
+                MessageBox.Show("Select a student to update", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            try
+            {
+                if (_studentDal.Update(s))
+                {
+                    MessageBox.Show("Student updated", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadStats();
+                    LoadRecentStudents();
+                    ClearForm();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to update student", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        // Delete student
+        private void btnDeleteStudent_Click(object sender, EventArgs e)
+        {
+            var txtId = GetControl<TextBox>("txtId");
+            if (txtId == null || !int.TryParse(txtId.Text, out var id) || id <= 0)
+            {
+                MessageBox.Show("Select a student to delete", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (MessageBox.Show("Delete selected student?", "Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
+            try
+            {
+                if (_studentDal.Delete(id))
+                {
+                    MessageBox.Show("Student deleted", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    LoadStats();
+                    LoadRecentStudents();
+                    ClearForm();
+                }
+                else
+                {
+                    MessageBox.Show("Failed to delete student", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnClear_Click(object sender, EventArgs e)
+        {
+            ClearForm();
+        }
+
+        // clear inputs
+        private void ClearForm()
+        {
+            var names = new[] { "txtId", "txtFullName", "txtEmail", "txtPhone", "txtAddress" };
+            foreach (var n in names)
+            {
+                var t = GetControl<TextBox>(n);
+                if (t != null) t.Text = string.Empty;
+            }
+            var cmb = GetControl<ComboBox>("cmbGender");
+            if (cmb != null && cmb.Items.Count > 0) cmb.SelectedIndex = 0;
+            var dtp = GetControl<DateTimePicker>("dtpDob");
+            if (dtp != null) dtp.Value = DateTime.Today;
+        }
+
+        // Fill form when selecting row
+        private void dgvRecent_SelectionChanged(object sender, EventArgs e)
+        {
+            if (dgvRecent.CurrentRow == null) return;
+            var s = dgvRecent.CurrentRow.DataBoundItem as Student;
+            if (s == null) return;
+            var txtId = GetControl<TextBox>("txtId");
+            var txtName = GetControl<TextBox>("txtFullName");
+            var txtEmail = GetControl<TextBox>("txtEmail");
+            var txtPhone = GetControl<TextBox>("txtPhone");
+            var cmbGender = GetControl<ComboBox>("cmbGender");
+            var dtpDob = GetControl<DateTimePicker>("dtpDob");
+            var txtAddress = GetControl<TextBox>("txtAddress");
+
+            if (txtId != null) txtId.Text = s.Id.ToString();
+            if (txtName != null) txtName.Text = s.Name;
+            if (txtEmail != null) txtEmail.Text = s.Email;
+            if (txtPhone != null) txtPhone.Text = s.Phone;
+            if (cmbGender != null) cmbGender.SelectedItem = string.IsNullOrEmpty(s.Gender) ? null : s.Gender;
+            if (dtpDob != null) dtpDob.Value = s.DateOfBirth ?? DateTime.Today;
+            if (txtAddress != null) txtAddress.Text = s.Address;
+        }
+    }
+}

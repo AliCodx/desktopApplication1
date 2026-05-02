@@ -1,0 +1,448 @@
+﻿using System.Windows.Forms;
+using System.Drawing;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class DashboardForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private Label lblWelcome;
+        private Label lblTotal;
+        private Button btnManageStudents;
+        private Button btnCreateUser;
+        private Button btnLogout;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.lblWelcome = new Label();
+            this.lblTotal = new Label();
+            this.btnManageStudents = new Button();
+            this.btnLogout = new Button();
+            this.SuspendLayout();
+
+            // ── Form ─────────────────────────────────────────────────────────
+            this.AutoScaleMode = AutoScaleMode.Font;
+            this.BackColor = Color.White;
+            this.ClientSize = new Size(1200, 700);
+            this.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            this.FormBorderStyle = FormBorderStyle.Sizable;
+            this.MaximizeBox = true;
+            this.MinimizeBox = true;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Dashboard";
+
+            // ═══════════════════════════════════════════════════════════════
+            // ROOT layout — 2 rows:
+            //   row 0 = header  (70 px absolute)
+            //   row 1 = body    (fill)
+            // ═══════════════════════════════════════════════════════════════
+            var rootTlp = new TableLayoutPanel();
+            rootTlp.Dock = DockStyle.Fill;
+            rootTlp.ColumnCount = 1;
+            rootTlp.RowCount = 2;
+            rootTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 70F));
+            rootTlp.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            rootTlp.Padding = new Padding(0);
+            rootTlp.Margin = new Padding(0);
+            this.Controls.Add(rootTlp);
+
+            // ── Header ───────────────────────────────────────────────────────
+            var topPanel = new Panel();
+            topPanel.Dock = DockStyle.Fill;
+            topPanel.BackColor = Color.FromArgb(34, 139, 230);
+            rootTlp.Controls.Add(topPanel, 0, 0);
+
+            this.lblWelcome.AutoSize = false;
+            this.lblWelcome.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblWelcome.ForeColor = Color.White;
+            this.lblWelcome.Font = new Font("Segoe UI", 20F, FontStyle.Bold, GraphicsUnit.Point);
+            this.lblWelcome.Location = new Point(24, 14);
+            this.lblWelcome.Size = new Size(560, 42);
+            topPanel.Controls.Add(this.lblWelcome);
+
+            this.lblTotal.AutoSize = false;
+            this.lblTotal.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblTotal.ForeColor = Color.White;
+            this.lblTotal.Font = new Font("Segoe UI", 14F, FontStyle.Regular, GraphicsUnit.Point);
+            this.lblTotal.Location = new Point(620, 20);
+            this.lblTotal.Size = new Size(320, 30);
+            topPanel.Controls.Add(this.lblTotal);
+
+            // ═══════════════════════════════════════════════════════════════
+            // BODY layout — 2 columns:
+            //   col 0 = left nav  (200 px absolute)
+            //   col 1 = content   (fill)
+            // ═══════════════════════════════════════════════════════════════
+            var bodyTlp = new TableLayoutPanel();
+            bodyTlp.Dock = DockStyle.Fill;
+            bodyTlp.RowCount = 1;
+            bodyTlp.ColumnCount = 2;
+            bodyTlp.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 200F));
+            bodyTlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            bodyTlp.Padding = new Padding(0);
+            bodyTlp.Margin = new Padding(0);
+            rootTlp.Controls.Add(bodyTlp, 0, 1);
+
+            // ── Left nav ─────────────────────────────────────────────────────
+            var navPanel = new Panel();
+            navPanel.Dock = DockStyle.Fill;
+            navPanel.BackColor = Color.FromArgb(245, 246, 250);
+            navPanel.Padding = new Padding(12);
+            navPanel.AutoScroll = true;
+            bodyTlp.Controls.Add(navPanel, 0, 0);
+
+            // Replace Manage Students with Create User button in nav
+            this.btnCreateUser = new Button();
+            this.btnCreateUser.Location = new Point(12, 16);
+            this.btnCreateUser.Name = "btnCreateUser";
+            this.btnCreateUser.Size = new Size(176, 42);
+            this.btnCreateUser.Text = "Create User";
+            this.btnCreateUser.FlatStyle = FlatStyle.Flat;
+            this.btnCreateUser.BackColor = Color.FromArgb(34, 139, 230);
+            this.btnCreateUser.ForeColor = Color.White;
+            this.btnCreateUser.FlatAppearance.BorderSize = 0;
+            this.btnCreateUser.Click += new System.EventHandler(this.btnManageUsers_Click);
+            navPanel.Controls.Add(this.btnCreateUser);
+
+            this.btnManageUsers = new Button();
+            this.btnManageUsers.Location = new Point(12, 70);
+            this.btnManageUsers.Name = "btnManageUsers";
+            this.btnManageUsers.Size = new Size(176, 42);
+            this.btnManageUsers.Text = "Create / Manage Users";
+            this.btnManageUsers.FlatStyle = FlatStyle.Flat;
+            this.btnManageUsers.BackColor = Color.FromArgb(88, 101, 242);
+            this.btnManageUsers.ForeColor = Color.White;
+            this.btnManageUsers.FlatAppearance.BorderSize = 0;
+            this.btnManageUsers.Click += new System.EventHandler(this.btnManageUsers_Click);
+            navPanel.Controls.Add(this.btnManageUsers);
+
+            this.btnReports = new Button();
+            this.btnReports.Location = new Point(12, 124);
+            this.btnReports.Name = "btnReports";
+            this.btnReports.Size = new Size(176, 42);
+            this.btnReports.Text = "Reports";
+            this.btnReports.FlatStyle = FlatStyle.Flat;
+            this.btnReports.BackColor = Color.FromArgb(72, 201, 176);
+            this.btnReports.ForeColor = Color.White;
+            this.btnReports.FlatAppearance.BorderSize = 0;
+            this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
+            navPanel.Controls.Add(this.btnReports);
+
+            this.btnSettings = new Button();
+            this.btnSettings.Location = new Point(12, 178);
+            this.btnSettings.Name = "btnSettings";
+            this.btnSettings.Size = new Size(176, 42);
+            this.btnSettings.Text = "Settings";
+            this.btnSettings.FlatStyle = FlatStyle.Flat;
+            this.btnSettings.BackColor = Color.FromArgb(201, 203, 207);
+            this.btnSettings.ForeColor = Color.FromArgb(34, 45, 50);
+            this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            navPanel.Controls.Add(this.btnSettings);
+
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.Dock = DockStyle.Bottom;
+            this.btnLogout.Height = 56;
+            this.btnLogout.FlatStyle = FlatStyle.Flat;
+            this.btnLogout.BackColor = Color.FromArgb(220, 220, 220);
+            this.btnLogout.ForeColor = Color.FromArgb(34, 45, 50);
+            this.btnLogout.FlatAppearance.BorderSize = 0;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            navPanel.Controls.Add(this.btnLogout);
+
+            // ═══════════════════════════════════════════════════════════════
+            // CONTENT area — SplitContainer (left=data, right=editor)
+            // ═══════════════════════════════════════════════════════════════
+            var splitMain = new SplitContainer();
+            splitMain.Dock = DockStyle.Fill;
+            splitMain.SplitterDistance = 760;
+            splitMain.IsSplitterFixed = false;
+            splitMain.BorderStyle = BorderStyle.None;
+            bodyTlp.Controls.Add(splitMain, 1, 0);
+
+            // ═══════════════════════════════════════════════════════════════
+            // LEFT split panel — TableLayoutPanel, 3 rows:
+            //   row 0 = stat cards  (90 px)
+            //   row 1 = action bar  (44 px)
+            //   row 2 = data grid   (fill)
+            // NO Padding on leftPanel itself — padding was clipping the cards
+            // ═══════════════════════════════════════════════════════════════
+            var leftPanel = splitMain.Panel1;
+            leftPanel.Padding = new Padding(0);  // intentionally zero — TLP handles spacing
+
+            var leftTlp = new TableLayoutPanel();
+            leftTlp.Dock = DockStyle.Fill;
+            leftTlp.ColumnCount = 1;
+            leftTlp.RowCount = 3;
+            leftTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 115F));
+            leftTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 44F));
+            leftTlp.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            leftTlp.Padding = new Padding(8, 8, 8, 8);
+            leftTlp.Margin = new Padding(0);
+            leftPanel.Controls.Add(leftTlp);
+
+            // row 0 — stat cards
+            var statsFlow = new FlowLayoutPanel();
+            statsFlow.Dock = DockStyle.Fill;
+            statsFlow.WrapContents = false;
+            statsFlow.FlowDirection = FlowDirection.LeftToRight;
+            statsFlow.AutoSize = false;
+            statsFlow.Padding = new Padding(0);
+            statsFlow.Margin = new Padding(0);
+            leftTlp.Controls.Add(statsFlow, 0, 0);
+
+            statsFlow.Controls.Add(CreateStatCard("Total Students", "lblTotalStat"));
+            statsFlow.Controls.Add(CreateStatCard("Recent (Last 7 days)", "lblRecentStat"));
+            statsFlow.Controls.Add(CreateStatCard("Added Today", "lblTodayStat"));
+
+            // row 1 — search + action buttons
+            var pnlActions = new Panel();
+            pnlActions.Dock = DockStyle.Fill;
+            pnlActions.Padding = new Padding(0, 6, 0, 6);
+            leftTlp.Controls.Add(pnlActions, 0, 1);
+
+            this.txtSearch = new TextBox();
+            this.txtSearch.Name = "txtSearch";
+            this.txtSearch.PlaceholderText = "Search students by name or id...";
+            this.txtSearch.Size = new Size(300, 28);
+            this.txtSearch.Location = new Point(0, 6);
+            this.txtSearch.TextChanged += new System.EventHandler(this.txtSearch_TextChanged);
+            pnlActions.Controls.Add(this.txtSearch);
+
+            this.btnSearch = new Button();
+            this.btnSearch.Location = new Point(308, 6);
+            this.btnSearch.Size = new Size(80, 28);
+            this.btnSearch.Text = "Search";
+            this.btnSearch.FlatStyle = FlatStyle.Flat;
+            this.btnSearch.BackColor = Color.FromArgb(34, 139, 230);
+            this.btnSearch.ForeColor = Color.White;
+            this.btnSearch.FlatAppearance.BorderSize = 0;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            pnlActions.Controls.Add(this.btnSearch);
+
+            this.btnRefresh = new Button();
+            this.btnRefresh.Location = new Point(396, 6);
+            this.btnRefresh.Size = new Size(80, 28);
+            this.btnRefresh.Text = "Refresh";
+            this.btnRefresh.FlatStyle = FlatStyle.Flat;
+            this.btnRefresh.BackColor = Color.FromArgb(108, 117, 125);
+            this.btnRefresh.ForeColor = Color.White;
+            this.btnRefresh.FlatAppearance.BorderSize = 0;
+            this.btnRefresh.Click += new System.EventHandler(this.btnRefresh_Click);
+            pnlActions.Controls.Add(this.btnRefresh);
+
+            this.btnExport = new Button();
+            this.btnExport.Location = new Point(484, 6);
+            this.btnExport.Size = new Size(100, 28);
+            this.btnExport.Text = "Export CSV";
+            this.btnExport.FlatStyle = FlatStyle.Flat;
+            this.btnExport.BackColor = Color.FromArgb(72, 201, 176);
+            this.btnExport.ForeColor = Color.White;
+            this.btnExport.FlatAppearance.BorderSize = 0;
+            this.btnExport.Click += new System.EventHandler(this.btnExport_Click);
+            pnlActions.Controls.Add(this.btnExport);
+
+            // row 2 — DataGridView
+            this.dgvRecent = new DataGridView();
+            this.dgvRecent.Name = "dgvRecent";
+            this.dgvRecent.Dock = DockStyle.Fill;
+            this.dgvRecent.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            this.dgvRecent.ReadOnly = true;
+            this.dgvRecent.AutoGenerateColumns = true;
+            this.dgvRecent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.dgvRecent.AllowUserToAddRows = false;
+            this.dgvRecent.AllowUserToDeleteRows = false;
+            this.dgvRecent.AllowUserToOrderColumns = true;
+            this.dgvRecent.EnableHeadersVisualStyles = false;
+            this.dgvRecent.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.EnableResizing;
+            this.dgvRecent.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(240, 240, 240);
+            this.dgvRecent.ColumnHeadersDefaultCellStyle.ForeColor = Color.FromArgb(34, 45, 50);
+            this.dgvRecent.AlternatingRowsDefaultCellStyle.BackColor = Color.FromArgb(250, 250, 250);
+            this.dgvRecent.RowHeadersVisible = false;
+            this.dgvRecent.SelectionChanged += new System.EventHandler(this.dgvRecent_SelectionChanged);
+            leftTlp.Controls.Add(this.dgvRecent, 0, 2);
+
+            // Quick add panel below grid for entering a new student record
+            var pnlQuickAdd = new Panel();
+            pnlQuickAdd.Dock = DockStyle.Bottom;
+            pnlQuickAdd.Height = 140;
+            pnlQuickAdd.Padding = new Padding(8);
+            pnlQuickAdd.BackColor = Color.WhiteSmoke;
+            leftPanel.Controls.Add(pnlQuickAdd);
+
+            // New Name
+            var lblNewName = new Label(); lblNewName.Text = "Name"; lblNewName.Location = new Point(8, 8); pnlQuickAdd.Controls.Add(lblNewName);
+            var txtNewName = new TextBox(); txtNewName.Name = "txtNewName"; txtNewName.Location = new Point(8, 28); txtNewName.Size = new Size(220, 24); pnlQuickAdd.Controls.Add(txtNewName);
+
+            // New Email
+            var lblNewEmail = new Label(); lblNewEmail.Text = "Email"; lblNewEmail.Location = new Point(240, 8); pnlQuickAdd.Controls.Add(lblNewEmail);
+            var txtNewEmail = new TextBox(); txtNewEmail.Name = "txtNewEmail"; txtNewEmail.Location = new Point(240, 28); txtNewEmail.Size = new Size(220, 24); pnlQuickAdd.Controls.Add(txtNewEmail);
+
+            // New Phone
+            var lblNewPhone = new Label(); lblNewPhone.Text = "Phone"; lblNewPhone.Location = new Point(472, 8); pnlQuickAdd.Controls.Add(lblNewPhone);
+            var txtNewPhone = new TextBox(); txtNewPhone.Name = "txtNewPhone"; txtNewPhone.Location = new Point(472, 28); txtNewPhone.Size = new Size(140, 24); pnlQuickAdd.Controls.Add(txtNewPhone);
+
+            // Gender
+            var lblNewGender = new Label(); lblNewGender.Text = "Gender"; lblNewGender.Location = new Point(624, 8); pnlQuickAdd.Controls.Add(lblNewGender);
+            var cmbNewGender = new ComboBox(); cmbNewGender.Name = "cmbNewGender"; cmbNewGender.DropDownStyle = ComboBoxStyle.DropDownList; cmbNewGender.Items.AddRange(new object[] { "Male", "Female", "Other" }); cmbNewGender.SelectedIndex = 0; cmbNewGender.Location = new Point(624, 28); cmbNewGender.Size = new Size(96, 24); pnlQuickAdd.Controls.Add(cmbNewGender);
+
+            // DOB
+            var lblNewDob = new Label(); lblNewDob.Text = "DOB"; lblNewDob.Location = new Point(736, 8); pnlQuickAdd.Controls.Add(lblNewDob);
+            var dtpNewDob = new DateTimePicker(); dtpNewDob.Name = "dtpNewDob"; dtpNewDob.Format = DateTimePickerFormat.Short; dtpNewDob.Location = new Point(736, 28); dtpNewDob.Size = new Size(120, 24); pnlQuickAdd.Controls.Add(dtpNewDob);
+
+            // Address
+            var lblNewAddress = new Label(); lblNewAddress.Text = "Address"; lblNewAddress.Location = new Point(8, 58); pnlQuickAdd.Controls.Add(lblNewAddress);
+            var txtNewAddress = new TextBox(); txtNewAddress.Name = "txtNewAddress"; txtNewAddress.Location = new Point(8, 78); txtNewAddress.Size = new Size(600, 24); pnlQuickAdd.Controls.Add(txtNewAddress);
+
+            // Add button
+            var btnAddNew = new Button(); btnAddNew.Name = "btnAddNew"; btnAddNew.Text = "Add New"; btnAddNew.Size = new Size(96, 30); btnAddNew.Location = new Point(624, 76); btnAddNew.BackColor = Color.FromArgb(60, 179, 113); btnAddNew.ForeColor = Color.White; btnAddNew.FlatStyle = FlatStyle.Flat; btnAddNew.Click += new System.EventHandler(this.btnAddNew_Click); pnlQuickAdd.Controls.Add(btnAddNew);
+
+            // ═══════════════════════════════════════════════════════════════
+            // RIGHT split panel — student editor
+            //
+            // TableLayoutPanel: 2 cols × 8 rows
+            //   col 0 = label  (120 px fixed — never clips text)
+            //   col 1 = input  (fill)
+            //
+            //   rows 0–5  = 36 px fixed  (ID, Name, Email, Phone, Gender, DOB)
+            //   row  6    = fill         (Address textarea)
+            //   row  7    = 48 px fixed  (buttons)
+            //
+            // KEY FIX for Address gap: the Address *label* is placed in row 6
+            // col 0 with CellStyle VerticalAlignment = Top so it hugs the top
+            // of the fill row instead of centring vertically in a huge cell.
+            // ═══════════════════════════════════════════════════════════════
+            var rightPanel = splitMain.Panel2;
+            rightPanel.Padding = new Padding(12, 8, 12, 8);
+
+            var editorTlp = new TableLayoutPanel();
+            editorTlp.Dock = DockStyle.Fill;
+            editorTlp.ColumnCount = 2;
+            editorTlp.RowCount = 8;
+            editorTlp.Padding = new Padding(4);
+            editorTlp.ColumnStyles.Add(new ColumnStyle(SizeType.Absolute, 120F)); // label col
+            editorTlp.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));  // input col
+            editorTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));  // 0  ID
+            editorTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));  // 1  Full Name
+            editorTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));  // 2  Email
+            editorTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));  // 3  Phone
+            editorTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));  // 4  Gender
+            editorTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 36F));  // 5  Date of Birth
+            editorTlp.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));  // 6  Address (fill)
+            editorTlp.RowStyles.Add(new RowStyle(SizeType.Absolute, 48F));  // 7  Buttons
+            rightPanel.Controls.Add(editorTlp);
+
+            // helper — label that fills its cell and aligns text top-left
+            Label MakeLbl(string text, bool topAlign = false)
+            {
+                var l = new Label
+                {
+                    Text = text,
+                    TextAlign = topAlign ? ContentAlignment.TopLeft : ContentAlignment.MiddleLeft,
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(0, topAlign ? 6 : 0, 0, 0)
+                };
+                return l;
+            }
+
+            // row 0 — ID
+            editorTlp.Controls.Add(MakeLbl("ID"), 0, 0);
+            editorTlp.Controls.Add(new TextBox { Name = "txtId", ReadOnly = true, Dock = DockStyle.Fill, Margin = new Padding(0, 2, 0, 2) }, 1, 0);
+
+            // row 1 — Full Name
+            editorTlp.Controls.Add(MakeLbl("Full Name"), 0, 1);
+            editorTlp.Controls.Add(new TextBox { Name = "txtFullName", Dock = DockStyle.Fill, Margin = new Padding(0, 2, 0, 2) }, 1, 1);
+
+            // row 2 — Email
+            editorTlp.Controls.Add(MakeLbl("Email"), 0, 2);
+            editorTlp.Controls.Add(new TextBox { Name = "txtEmail", Dock = DockStyle.Fill, Margin = new Padding(0, 2, 0, 2) }, 1, 2);
+
+            // row 3 — Phone
+            editorTlp.Controls.Add(MakeLbl("Phone"), 0, 3);
+            editorTlp.Controls.Add(new TextBox { Name = "txtPhone", Dock = DockStyle.Fill, Margin = new Padding(0, 2, 0, 2) }, 1, 3);
+
+            // row 4 — Gender
+            editorTlp.Controls.Add(MakeLbl("Gender"), 0, 4);
+            var cmbGender = new ComboBox
+            {
+                Name = "cmbGender",
+                DropDownStyle = ComboBoxStyle.DropDownList,
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0, 2, 0, 2)
+            };
+            cmbGender.Items.AddRange(new object[] { "Male", "Female", "Other" });
+            cmbGender.SelectedIndex = 0;
+            editorTlp.Controls.Add(cmbGender, 1, 4);
+
+            // row 5 — Date of Birth
+            editorTlp.Controls.Add(MakeLbl("Date of Birth"), 0, 5);
+            editorTlp.Controls.Add(new DateTimePicker { Name = "dtpDob", Format = DateTimePickerFormat.Short, Dock = DockStyle.Fill, Margin = new Padding(0, 2, 0, 2) }, 1, 5);
+
+            // row 6 — Address  (topAlign=true so label sticks to top of the tall row)
+            editorTlp.Controls.Add(MakeLbl("Address", topAlign: true), 0, 6);
+            editorTlp.Controls.Add(new TextBox
+            {
+                Name = "txtAddress",
+                Multiline = true,
+                ScrollBars = ScrollBars.Vertical,
+                Dock = DockStyle.Fill,
+                Margin = new Padding(0, 2, 0, 2)
+            }, 1, 6);
+
+            // row 7 — Buttons (span both columns)
+            var pnlButtons = new FlowLayoutPanel
+            {
+                FlowDirection = FlowDirection.LeftToRight,
+                Dock = DockStyle.Fill,
+                AutoSize = false,
+                Padding = new Padding(0, 8, 0, 0)
+            };
+
+            Button MakeBtn(string name, string text, Color bg, Color fg)
+            {
+                var b = new Button
+                {
+                    Name = name,
+                    Text = text,
+                    Size = new Size(80, 32),
+                    BackColor = bg,
+                    ForeColor = fg,
+                    FlatStyle = FlatStyle.Flat,
+                    Margin = new Padding(0, 0, 6, 0)
+                };
+                b.FlatAppearance.BorderSize = 0;
+                return b;
+            }
+
+            var btnAdd = MakeBtn("btnAddStudent", "Add", Color.FromArgb(60, 179, 113), Color.White);
+            var btnUpdate = MakeBtn("btnUpdateStudent", "Update", Color.FromArgb(34, 139, 230), Color.White);
+            var btnDelete = MakeBtn("btnDeleteStudent", "Delete", Color.FromArgb(220, 53, 69), Color.White);
+            var btnClear = MakeBtn("btnClear", "Clear", Color.FromArgb(200, 200, 200), Color.FromArgb(34, 45, 50));
+
+            btnAdd.Click += new System.EventHandler(this.btnAddStudent_Click);
+            btnUpdate.Click += new System.EventHandler(this.btnUpdateStudent_Click);
+            btnDelete.Click += new System.EventHandler(this.btnDeleteStudent_Click);
+            btnClear.Click += new System.EventHandler(this.btnClear_Click);
+
+            pnlButtons.Controls.Add(btnAdd);
+            pnlButtons.Controls.Add(btnUpdate);
+            pnlButtons.Controls.Add(btnDelete);
+            pnlButtons.Controls.Add(btnClear);
+
+            editorTlp.Controls.Add(pnlButtons, 0, 7);
+            editorTlp.SetColumnSpan(pnlButtons, 2);
+
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

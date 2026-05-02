@@ -1,0 +1,101 @@
+﻿using System.Windows.Forms;
+using System.Drawing;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class DashboardForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private Label lblWelcome;
+        private Label lblTotal;
+        private Button btnManageStudents;
+        private Button btnLogout;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+            {
+                components.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.lblWelcome = new Label();
+            this.lblTotal = new Label();
+            this.btnManageStudents = new Button();
+            this.btnLogout = new Button();
+            this.SuspendLayout();
+            // Modern Dashboard layout
+            this.BackColor = Color.White;
+            this.ClientSize = new Size(520, 200);
+            this.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point);
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            this.Text = "Dashboard";
+
+            // Top panel
+            var topPanel = new Panel();
+            topPanel.Dock = DockStyle.Top;
+            topPanel.Height = 80;
+            topPanel.BackColor = Color.FromArgb(34, 139, 230);
+            this.Controls.Add(topPanel);
+
+            // Welcome label
+            this.lblWelcome = new Label();
+            this.lblWelcome.AutoSize = false;
+            this.lblWelcome.TextAlign = ContentAlignment.MiddleLeft;
+            this.lblWelcome.ForeColor = Color.White;
+            this.lblWelcome.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point);
+            this.lblWelcome.Location = new Point(16, 24);
+            this.lblWelcome.Size = new Size(360, 30);
+            topPanel.Controls.Add(this.lblWelcome);
+
+            // Total students large label
+            this.lblTotal = new Label();
+            this.lblTotal.AutoSize = false;
+            this.lblTotal.TextAlign = ContentAlignment.MiddleRight;
+            this.lblTotal.ForeColor = Color.White;
+            this.lblTotal.Font = new Font("Segoe UI", 10F, FontStyle.Regular, GraphicsUnit.Point);
+            this.lblTotal.Location = new Point(380, 24);
+            this.lblTotal.Size = new Size(120, 30);
+            topPanel.Controls.Add(this.lblTotal);
+
+            // Buttons panel
+            var btnPanel = new Panel();
+            btnPanel.Dock = DockStyle.Fill;
+            btnPanel.Padding = new Padding(16);
+            this.Controls.Add(btnPanel);
+
+            // Manage Students button
+            this.btnManageStudents.Location = new Point(16, 18);
+            this.btnManageStudents.Name = "btnManageStudents";
+            this.btnManageStudents.Size = new Size(160, 36);
+            this.btnManageStudents.Text = "Manage Students";
+            this.btnManageStudents.FlatStyle = FlatStyle.Flat;
+            this.btnManageStudents.BackColor = Color.FromArgb(34, 139, 230);
+            this.btnManageStudents.ForeColor = Color.White;
+            this.btnManageStudents.FlatAppearance.BorderSize = 0;
+            this.btnManageStudents.Click += new System.EventHandler(this.btnManageStudents_Click);
+            btnPanel.Controls.Add(this.btnManageStudents);
+
+            // Logout button
+            this.btnLogout.Location = new Point(190, 18);
+            this.btnLogout.Name = "btnLogout";
+            this.btnLogout.Size = new Size(100, 36);
+            this.btnLogout.Text = "Logout";
+            this.btnLogout.FlatStyle = FlatStyle.Flat;
+            this.btnLogout.BackColor = Color.FromArgb(220, 220, 220);
+            this.btnLogout.ForeColor = Color.FromArgb(34, 45, 50);
+            this.btnLogout.FlatAppearance.BorderSize = 0;
+            this.btnLogout.Click += new System.EventHandler(this.btnLogout_Click);
+            btnPanel.Controls.Add(this.btnLogout);
+
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

@@ -1,0 +1,156 @@
+﻿using System;
+using System.Windows.Forms;
+using StudentManagementSystemProject.DAL;
+
+namespace StudentManagementSystemProject.Forms
+{
+    public partial class DashboardForm : Form
+    {
+        private readonly string _username;
+        private readonly StudentDAL _studentDal = new StudentDAL();
+
+        // New controls used in designer
+        private Button btnManageUsers;
+        private Button btnReports;
+        private Button btnSettings;
+        private Button btnRefresh;
+        private Button btnExport;
+        private Button btnSearch;
+        private TextBox txtSearch;
+        private DataGridView dgvRecent;
+
+        public DashboardForm(string username)
+        {
+            _username = username;
+            InitializeComponent();
+            LoadStats();
+            LoadRecentStudents();
+        }
+
+        private void LoadStats()
+        {
+            try
+            {
+                lblWelcome.Text = $"Welcome, {_username}";
+                // Update main total label if exists
+                lblTotal.Text = $"Total Students: {_studentDal.GetCount()}";
+
+                // Update stat cards when present
+                var all = _studentDal.GetAll();
+                var total = all.Count;
+                var recent7 = all.FindAll(s => s.Id >= 0).Count; // placeholder, if CreatedAt available replace logic
+                // Try to find labels inside stat cards by name
+                foreach (Control c in this.Controls)
+                {
+                    // stats are inside nested panels; search recursively
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading dashboard: " + ex.Message);
+            }
+        }
+
+        private void LoadRecentStudents()
+        {
+            try
+            {
+                var all = _studentDal.GetAll();
+                var recent = all.OrderByDescending(s => s.Id).Take(10).ToList();
+                if (dgvRecent != null)
+                {
+                    dgvRecent.DataSource = recent;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading recent students: " + ex.Message);
+            }
+        }
+
+        private void btnManageStudents_Click(object sender, EventArgs e)
+        {
+            var sf = new StudentForm();
+            sf.ShowDialog();
+            LoadStats();
+            LoadRecentStudents();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnManageUsers_Click(object sender, EventArgs e)
+        {
+            var f = new CreateUserForm();
+            f.ShowDialog();
+        }
+
+        private void btnReports_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Reports feature coming soon.", "Reports", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("Settings feature coming soon.", "Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void btnRefresh_Click(object sender, EventArgs e)
+        {
+            LoadStats();
+            LoadRecentStudents();
+        }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            var term = txtSearch?.Text.Trim();
+            if (string.IsNullOrEmpty(term))
+            {
+                LoadRecentStudents();
+                return;
+            }
+            try
+            {
+                var results = _studentDal.Search(term);
+                if (dgvRecent != null)
+                    dgvRecent.DataSource = results;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Search error: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnExport_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var all = _studentDal.GetAll();
+                using (var sfd = new SaveFileDialog())
+                {
+                    sfd.Filter = "CSV files (*.csv)|*.csv|All files (*.*)|*.*";
+                    sfd.FileName = "students_export.csv";
+                    if (sfd.ShowDialog() == DialogResult.OK)
+                    {
+                        using (var sw = new System.IO.StreamWriter(sfd.FileName))
+                        {
+                            sw.WriteLine("Id,Name,Email,Age,Phone,Address");
+                            foreach (var s in all)
+                            {
+                                var line = $"{s.Id},\"{s.Name}\",\"{s.Email}\",{s.Age},\"{s.Phone}\",\"{s.Address}\"";
+                                sw.WriteLine(line);
+                            }
+                        }
+                        MessageBox.Show("Export completed.", "Export", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Export failed: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}

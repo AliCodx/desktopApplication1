@@ -1,0 +1,52 @@
+﻿using System;
+using System.Windows.Forms;
+using StudentManagementSystemProject.DAL;
+
+namespace StudentManagementSystemProject.Forms
+{
+    public partial class LoginForm : Form
+    {
+        private readonly UserDAL _userDal = new UserDAL();
+
+        public LoginForm()
+        {
+            InitializeComponent();
+        }
+
+        private void btnLogin_Click(object sender, EventArgs e)
+        {
+            var username = txtUsername.Text.Trim();
+            var password = txtPassword.Text.Trim();
+            if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password))
+            {
+                MessageBox.Show("Please enter username and password", "Validation", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            try
+            {
+                if (_userDal.Authenticate(username, password))
+                {
+                    // Open dashboard
+                    var dash = new DashboardForm(username);
+                    dash.Show();
+                    this.Hide();
+                    dash.FormClosed += (s, args) => this.Show();
+                }
+                else
+                {
+                    MessageBox.Show("Invalid credentials", "Login Failed", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error connecting to database: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
+    }
+}

@@ -1,0 +1,44 @@
+﻿using System;
+using System.Windows.Forms;
+using StudentManagementSystemProject.DAL;
+
+namespace StudentManagementSystemProject.Forms
+{
+    public partial class DashboardForm : Form
+    {
+        private readonly string _username;
+        private readonly StudentDAL _studentDal = new StudentDAL();
+
+        public DashboardForm(string username)
+        {
+            _username = username;
+            InitializeComponent();
+            LoadStats();
+        }
+
+        private void LoadStats()
+        {
+            try
+            {
+                lblWelcome.Text = $"Welcome, {_username}";
+                lblTotal.Text = $"Total Students: {_studentDal.GetCount()}";
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading dashboard: " + ex.Message);
+            }
+        }
+
+        private void btnManageStudents_Click(object sender, EventArgs e)
+        {
+            var sf = new StudentForm();
+            sf.ShowDialog();
+            LoadStats();
+        }
+
+        private void btnLogout_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+    }
+}

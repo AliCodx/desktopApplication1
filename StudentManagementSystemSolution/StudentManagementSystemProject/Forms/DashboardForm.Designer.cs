@@ -98,10 +98,18 @@ namespace StudentManagementSystemProject.Forms
             navPanel.Padding = new Padding(12);
             navPanel.AutoScroll = true;
             bodyTlp.Controls.Add(navPanel, 0, 0);
-
             // Replace Manage Students with Create User button in nav
+            // Use a FlowLayoutPanel to keep buttons stacked with consistent spacing
+            var navButtonsFlow = new FlowLayoutPanel();
+            navButtonsFlow.FlowDirection = FlowDirection.TopDown;
+            navButtonsFlow.WrapContents = false;
+            navButtonsFlow.Dock = DockStyle.Top;
+            navButtonsFlow.AutoSize = false;
+            navButtonsFlow.Size = new Size(176, 240);
+            navButtonsFlow.Padding = new Padding(0);
+            navPanel.Controls.Add(navButtonsFlow);
+
             this.btnCreateUser = new Button();
-            this.btnCreateUser.Location = new Point(12, 16);
             this.btnCreateUser.Name = "btnCreateUser";
             this.btnCreateUser.Size = new Size(176, 42);
             this.btnCreateUser.Text = "Create User";
@@ -109,13 +117,13 @@ namespace StudentManagementSystemProject.Forms
             this.btnCreateUser.BackColor = Color.FromArgb(34, 139, 230);
             this.btnCreateUser.ForeColor = Color.White;
             this.btnCreateUser.FlatAppearance.BorderSize = 0;
+            this.btnCreateUser.Margin = new Padding(0, 0, 0, 6);
             this.btnCreateUser.Click += new System.EventHandler(this.btnManageUsers_Click);
-            navPanel.Controls.Add(this.btnCreateUser);
+            navButtonsFlow.Controls.Add(this.btnCreateUser);
 
             // removed duplicate Create / Manage Users button (use single Create User button above)
 
             this.btnReports = new Button();
-            this.btnReports.Location = new Point(12, 124);
             this.btnReports.Name = "btnReports";
             this.btnReports.Size = new Size(176, 42);
             this.btnReports.Text = "Reports";
@@ -123,11 +131,11 @@ namespace StudentManagementSystemProject.Forms
             this.btnReports.BackColor = Color.FromArgb(72, 201, 176);
             this.btnReports.ForeColor = Color.White;
             this.btnReports.FlatAppearance.BorderSize = 0;
+            this.btnReports.Margin = new Padding(0, 0, 0, 6);
             this.btnReports.Click += new System.EventHandler(this.btnReports_Click);
-            navPanel.Controls.Add(this.btnReports);
+            navButtonsFlow.Controls.Add(this.btnReports);
 
             this.btnSettings = new Button();
-            this.btnSettings.Location = new Point(12, 178);
             this.btnSettings.Name = "btnSettings";
             this.btnSettings.Size = new Size(176, 42);
             this.btnSettings.Text = "Settings";
@@ -135,8 +143,9 @@ namespace StudentManagementSystemProject.Forms
             this.btnSettings.BackColor = Color.FromArgb(201, 203, 207);
             this.btnSettings.ForeColor = Color.FromArgb(34, 45, 50);
             this.btnSettings.FlatAppearance.BorderSize = 0;
+            this.btnSettings.Margin = new Padding(0, 0, 0, 6);
             this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
-            navPanel.Controls.Add(this.btnSettings);
+            navButtonsFlow.Controls.Add(this.btnSettings);
 
             this.btnLogout.Name = "btnLogout";
             this.btnLogout.Text = "Logout";

@@ -1,0 +1,49 @@
+﻿using System.Windows.Forms;
+using System.Drawing;
+using System.Windows.Forms;
+using System.Drawing;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class ReportsForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private DataGridView dgvGender;
+        private DataGridView dgvRecent;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.dgvGender = new DataGridView();
+            this.dgvRecent = new DataGridView();
+
+            this.SuspendLayout();
+            this.ClientSize = new Size(820, 480);
+            this.Text = "Reports";
+            this.StartPosition = FormStartPosition.CenterParent;
+
+            this.dgvGender.Location = new Point(12, 12);
+            this.dgvGender.Size = new Size(380, 420);
+            this.dgvGender.ReadOnly = true;
+            this.dgvGender.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.Controls.Add(this.dgvGender);
+
+            this.dgvRecent.Location = new Point(410, 12);
+            this.dgvRecent.Size = new Size(380, 420);
+            this.dgvRecent.ReadOnly = true;
+            this.dgvRecent.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.Controls.Add(this.dgvRecent);
+
+            this.Load += new System.EventHandler(this.ReportsForm_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

@@ -1,0 +1,40 @@
+﻿using System.Windows.Forms;
+using System.Drawing;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class ReportsForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private DataGridView dgvGender;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.dgvGender = new DataGridView();
+            this.dgvRecent = new DataGridView();
+
+            this.SuspendLayout();
+            this.ClientSize = new Size(420, 480);
+            this.Text = "Reports";
+            this.StartPosition = FormStartPosition.CenterParent;
+
+            this.dgvGender.Location = new Point(12, 12);
+            this.dgvGender.Size = new Size(380, 420);
+            this.dgvGender.ReadOnly = true;
+            this.dgvGender.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            this.Controls.Add(this.dgvGender);
+
+            this.Load += new System.EventHandler(this.ReportsForm_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

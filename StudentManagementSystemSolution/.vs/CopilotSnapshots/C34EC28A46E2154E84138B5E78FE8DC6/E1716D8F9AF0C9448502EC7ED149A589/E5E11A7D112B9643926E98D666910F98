@@ -1,0 +1,52 @@
+﻿using System.Windows.Forms;
+using System.Drawing;
+using System.Windows.Forms.DataVisualization.Charting;
+
+namespace StudentManagementSystemProject.Forms
+{
+    partial class ReportsForm
+    {
+        private System.ComponentModel.IContainer components = null;
+        private Chart chartGender;
+        private Chart chartRecent;
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing && (components != null))
+                components.Dispose();
+            base.Dispose(disposing);
+        }
+
+        private void InitializeComponent()
+        {
+            components = new System.ComponentModel.Container();
+            this.chartGender = new Chart();
+            this.chartRecent = new Chart();
+
+            this.SuspendLayout();
+            this.ClientSize = new Size(800, 480);
+            this.Text = "Reports";
+            this.StartPosition = FormStartPosition.CenterParent;
+
+            // chartGender
+            var area1 = new ChartArea("Area1");
+            this.chartGender.ChartAreas.Add(area1);
+            this.chartGender.Legends.Add(new Legend("Legend1"));
+            this.chartGender.Location = new Point(12, 12);
+            this.chartGender.Size = new Size(380, 220);
+            this.Controls.Add(this.chartGender);
+
+            // chartRecent
+            var area2 = new ChartArea("Area2");
+            this.chartRecent.ChartAreas.Add(area2);
+            this.chartRecent.Legends.Add(new Legend("Legend2"));
+            this.chartRecent.Location = new Point(410, 12);
+            this.chartRecent.Size = new Size(380, 220);
+            this.Controls.Add(this.chartRecent);
+
+            this.Load += new System.EventHandler(this.ReportsForm_Load);
+            this.ResumeLayout(false);
+            this.PerformLayout();
+        }
+    }
+}

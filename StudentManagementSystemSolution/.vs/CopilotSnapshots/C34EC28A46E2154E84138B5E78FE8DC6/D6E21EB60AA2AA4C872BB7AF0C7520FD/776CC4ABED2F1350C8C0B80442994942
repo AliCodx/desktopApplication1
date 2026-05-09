@@ -1,0 +1,40 @@
+﻿using System;
+using System.Linq;
+using System.Windows.Forms;
+using StudentManagementSystemProject.DAL;
+
+namespace StudentManagementSystemProject.Forms
+{
+    public partial class ReportsForm : Form
+    {
+        private readonly StudentDAL _studentDal = new StudentDAL();
+
+        public ReportsForm()
+        {
+            InitializeComponent();
+        }
+
+        private void ReportsForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                var students = _studentDal.GetAll();
+
+                // Gender distribution table
+                var byGender = students.GroupBy(s => string.IsNullOrEmpty(s.Gender) ? "Unknown" : s.Gender)
+                    .Select(g => new { Gender = g.Key, Count = g.Count() }).ToList();
+                dgvGender.DataSource = byGender;
+
+                // Recent registrations: show latest 20 students
+                var recent = students.OrderByDescending(s => s.Id).Take(20)
+                    .Select(s => new { s.Id, s.Name, s.Email, Gender = string.IsNullOrEmpty(s.Gender)? "Unknown" : s.Gender, DateOfBirth = (s.DateOfBirth.HasValue ? s.DateOfBirth.Value.ToString("yyyy-MM-dd") : string.Empty) })
+                    .ToList();
+                dgvRecent.DataSource = recent;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading reports: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}

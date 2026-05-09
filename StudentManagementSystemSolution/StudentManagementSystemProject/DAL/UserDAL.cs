@@ -6,16 +6,23 @@ namespace StudentManagementSystemProject.DAL
 {
     public class UserDAL
     {
-        // Authenticate user from Users table
-        public bool Authenticate(string username, string password)
+        // Authenticate user from Users table. Returns role if authenticated, otherwise null.
+        public string Authenticate(string username, string password)
         {
             using (var conn = DBConnection.GetConnection())
-            using (var cmd = new MySqlCommand("SELECT COUNT(1) FROM Users WHERE Username=@u AND Password=@p", conn))
+            using (var cmd = new MySqlCommand("SELECT Password, Role FROM Users WHERE Username=@u", conn))
             {
                 cmd.Parameters.AddWithValue("@u", username);
-                cmd.Parameters.AddWithValue("@p", password); // For demo only. In production, store hashed passwords.
                 conn.Open();
-                return Convert.ToInt32(cmd.ExecuteScalar()) > 0;
+                using (var rdr = cmd.ExecuteReader())
+                {
+                    if (!rdr.Read()) return null;
+                    var stored = rdr.IsDBNull(0) ? string.Empty : rdr.GetString(0);
+                    var role = rdr.IsDBNull(1) ? string.Empty : rdr.GetString(1);
+                    // note: currently passwords are stored plain in DB in this project. Compare directly.
+                    if (string.Equals(stored, password)) return role;
+                    return null;
+                }
             }
         }
 
@@ -34,11 +41,25 @@ namespace StudentManagementSystemProject.DAL
                 {
                     return cmd.ExecuteNonQuery() > 0;
                 }
-                catch (MySqlException ex)
+                catch (MySqlException)
                 {
                     // Duplicate entry or other DB errors will be handled by caller
                     return false;
                 }
+            }
+        }
+
+        // Update user profile: full name and password (plain-text, matches current storage approach)
+        public bool UpdateUser(string username, string fullName, string password)
+        {
+            using (var conn = DBConnection.GetConnection())
+            using (var cmd = new MySqlCommand("UPDATE Users SET FullName=@f, Password=@p WHERE Username=@u", conn))
+            {
+                cmd.Parameters.AddWithValue("@f", string.IsNullOrEmpty(fullName) ? (object)DBNull.Value : fullName);
+                cmd.Parameters.AddWithValue("@p", password);
+                cmd.Parameters.AddWithValue("@u", username);
+                conn.Open();
+                return cmd.ExecuteNonQuery() > 0;
             }
         }
     }

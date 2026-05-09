@@ -25,9 +25,10 @@ namespace StudentManagementSystemProject.Forms
 
             try
             {
-                if (_userDal.Authenticate(username, password))
+                var role = _userDal.Authenticate(username, password);
+                if (!string.IsNullOrEmpty(role))
                 {
-                    // Open dashboard
+                    // Open dashboard and pass username
                     var dash = new DashboardForm(username);
                     dash.Show();
                     this.Hide();

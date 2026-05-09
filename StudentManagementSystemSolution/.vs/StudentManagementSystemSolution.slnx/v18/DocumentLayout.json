@@ -1,22 +1,10 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\",
+  "WorkspaceRootPath": "C:\\Users\\aliab\\Desktop\\Desktop Application\\desktopApplication1\\StudentManagementSystemSolution\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|c:\\users\\aliab\\desktop\\desktop application\\studentmanagementsystemsolution\\studentmanagementsystemproject\\forms\\dashboardform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|solutionrelative:studentmanagementsystemproject\\forms\\dashboardform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|c:\\users\\aliab\\desktop\\desktop application\\studentmanagementsystemsolution\\studentmanagementsystemproject\\studentmanagementsystemproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
-      "RelativeMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|solutionrelative:studentmanagementsystemproject\\studentmanagementsystemproject.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|c:\\users\\aliab\\desktop\\desktop application\\studentmanagementsystemsolution\\studentmanagementsystemproject\\forms\\loginform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|solutionrelative:studentmanagementsystemproject\\forms\\loginform.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|c:\\users\\aliab\\desktop\\desktop application\\studentmanagementsystemsolution\\studentmanagementsystemproject\\forms\\dashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|solutionrelative:studentmanagementsystemproject\\forms\\dashboardform.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|c:\\users\\aliab\\desktop\\desktop application\\desktopapplication1\\studentmanagementsystemsolution\\studentmanagementsystemproject\\data\\dbconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5240A211-6601-DE71-4FC3-CF6F0E43D40F}|StudentManagementSystemProject\\StudentManagementSystemProject.csproj|solutionrelative:studentmanagementsystemproject\\data\\dbconnection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +14,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -34,54 +22,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "DashboardForm.cs",
-              "DocumentMoniker": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\StudentManagementSystemProject\\Forms\\DashboardForm.cs",
-              "RelativeDocumentMoniker": "StudentManagementSystemProject\\Forms\\DashboardForm.cs",
-              "ToolTip": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\StudentManagementSystemProject\\Forms\\DashboardForm.cs",
-              "RelativeToolTip": "StudentManagementSystemProject\\Forms\\DashboardForm.cs",
-              "ViewState": "AgIAAFkAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-02T11:29:02.982Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DashboardForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\StudentManagementSystemProject\\Forms\\DashboardForm.Designer.cs",
-              "RelativeDocumentMoniker": "StudentManagementSystemProject\\Forms\\DashboardForm.Designer.cs",
-              "ToolTip": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\StudentManagementSystemProject\\Forms\\DashboardForm.Designer.cs",
-              "RelativeToolTip": "StudentManagementSystemProject\\Forms\\DashboardForm.Designer.cs",
-              "ViewState": "AgIAAJcBAAAAAAAAAAAMwAAAAAAAAAAAAAAAAA==",
+              "Title": "DBConnection.cs",
+              "DocumentMoniker": "C:\\Users\\aliab\\Desktop\\Desktop Application\\desktopApplication1\\StudentManagementSystemSolution\\StudentManagementSystemProject\\Data\\DBConnection.cs",
+              "RelativeDocumentMoniker": "StudentManagementSystemProject\\Data\\DBConnection.cs",
+              "ToolTip": "C:\\Users\\aliab\\Desktop\\Desktop Application\\desktopApplication1\\StudentManagementSystemSolution\\StudentManagementSystemProject\\Data\\DBConnection.cs",
+              "RelativeToolTip": "StudentManagementSystemProject\\Data\\DBConnection.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-02T11:24:01.561Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "LoginForm.Designer.cs",
-              "DocumentMoniker": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\StudentManagementSystemProject\\Forms\\LoginForm.Designer.cs",
-              "RelativeDocumentMoniker": "StudentManagementSystemProject\\Forms\\LoginForm.Designer.cs",
-              "ToolTip": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\StudentManagementSystemProject\\Forms\\LoginForm.Designer.cs",
-              "RelativeToolTip": "StudentManagementSystemProject\\Forms\\LoginForm.Designer.cs",
-              "ViewState": "AgIAAG8AAAAAAAAAAABRwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-02T11:23:47.061Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "StudentManagementSystemProject",
-              "DocumentMoniker": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\StudentManagementSystemProject\\StudentManagementSystemProject.csproj",
-              "RelativeDocumentMoniker": "StudentManagementSystemProject\\StudentManagementSystemProject.csproj",
-              "ToolTip": "C:\\Users\\aliab\\Desktop\\Desktop Application\\StudentManagementSystemSolution\\StudentManagementSystemProject\\StudentManagementSystemProject.csproj",
-              "RelativeToolTip": "StudentManagementSystemProject\\StudentManagementSystemProject.csproj",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAASAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2026-05-02T11:15:04.335Z",
+              "WhenOpened": "2026-05-09T17:31:40.819Z",
               "EditorCaption": ""
             }
           ]

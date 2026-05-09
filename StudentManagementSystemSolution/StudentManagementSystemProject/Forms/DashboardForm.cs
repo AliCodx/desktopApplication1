@@ -240,12 +240,30 @@ namespace StudentManagementSystemProject.Forms
 
         private void btnReports_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Reports feature coming soon.", "Reports", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                var r = new ReportsForm();
+                r.ShowDialog(this);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to open reports: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnSettings_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Settings feature coming soon.", "Settings", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            try
+            {
+                var sf = new SettingsForm(_username);
+                sf.ShowDialog(this);
+                // reload welcome in case name changed
+                LoadStats();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Unable to open settings: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnRefresh_Click(object sender, EventArgs e)

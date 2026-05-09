@@ -1,0 +1,54 @@
+﻿using System;
+using System.Linq;
+using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
+using StudentManagementSystemProject.DAL;
+
+namespace StudentManagementSystemProject.Forms
+{
+    public partial class ReportsForm : Form
+    {
+        private readonly StudentDAL _studentDal = new StudentDAL();
+
+        public ReportsForm()
+        {
+            InitializeComponent();
+        }
+
+        private void ReportsForm_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                var students = _studentDal.GetAll();
+                // gender distribution
+                var byGender = students.GroupBy(s => string.IsNullOrEmpty(s.Gender) ? "Unknown" : s.Gender)
+                    .Select(g => new { Gender = g.Key, Count = g.Count() }).ToList();
+
+                chartGender.Series.Clear();
+                var series = chartGender.Series.Add("Gender");
+                series.ChartType = SeriesChartType.Pie;
+                foreach (var g in byGender)
+                {
+                    var p = series.Points.AddY(g.Count);
+                    p.AxisLabel = g.Gender;
+                    p.Label = $"{g.Gender}: {g.Count}";
+                }
+
+                // recent registrations per day (last 14 days)
+                var recent = students.Where(s => s.DateOfBirth != null).ToList();
+                // This is placeholder — ideally use CreatedAt column. Use DOB just to show a chart example.
+                var series2 = chartRecent.Series.Add("Recent");
+                series2.ChartType = SeriesChartType.Column;
+                var grouped = recent.GroupBy(s => s.DateOfBirth?.ToString("yyyy-MM-dd")).OrderBy(g => g.Key);
+                foreach (var g in grouped)
+                {
+                    series2.Points.AddXY(g.Key, g.Count());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error loading reports: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+}
